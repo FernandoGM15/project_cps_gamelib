@@ -14,12 +14,14 @@ class juego(object):
     self.genres=genres
     self.ESRB=ESRB
 
+  @abc.AbstractMehtod
+
   def __str__(self):
     r=f"\nName: {self.name}\n"
     r+=f"Description:{self.desc}"
     r+=f"Rating:{self.rating}"
     r+=f"Release date:{self.fecha}"
-    r+=f""
+    r+=f"Picture links{self.pictures}"
 
 
 def get_juego(game: str):
