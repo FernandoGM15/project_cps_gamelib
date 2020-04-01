@@ -1,18 +1,11 @@
 import requests
+import API_request
 import json
 from abc import ABCMeta, abstractmethod
 
-@abstractmethod
-class interface(metaclass=ABCMeta):
-  def get_juego(self):
-    pass
-
-  def set_database(self):
-    pass   
-      
 
 class juego(object):
-  # def __init__(self, name:str, desc:str, rating:str, fecha:str, pictures:list , plataforms: list , devs: list, genres: list,ESRB:str):
+      # def __init__(self, name:str, desc:str, rating:str, fecha:str, pictures:list , plataforms: list , devs: list, genres: list,ESRB:str):
   #   self.name=name
   #   self.desc=desc
   #   self.rating=rating
