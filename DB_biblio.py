@@ -1,6 +1,7 @@
 from abc import abstractmethod, ABCMeta
-@abstractmethod
+
 class DataBase_biblio(metaclass=ABCMeta):
+    @abstractmethod
     def create_biblioteca(self, nombre:str, juegos:dict):
         pass
 
