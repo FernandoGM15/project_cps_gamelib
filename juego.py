@@ -1,16 +1,15 @@
 import requests
-import API_request
 import json
-import abc
+from abc import *
 
 class juego(object):
-  def __init__(self, name:str, desc:str, rating:str, fecha:str, pictures:list , plataforms: list , devs: list, genres: list,ESRB:str):
+  def __init__(self, name:str, desc:str, rating:str, fecha:str, pictures:list , platforms: list , devs: list, genres: list,ESRB:str):
     self.name=name
     self.desc=desc
     self.rating=rating
     self.fecha=fecha
     self.pictures=pictures
-    self.plataforms=plataforms
+    self.platforms=platforms
     self.devs=devs
     self.genres=genres
     self.ESRB=ESRB or "NOT DEFINED, game too old(?)"
@@ -21,30 +20,34 @@ class juego(object):
     r+=f"\nRating:{self.rating}"
     r+=f"\nRelease date:{self.fecha}"
     r+=f"\nPicture links{self.pictures}"
-    r+=f"\nPlataforms: {self.plataforms}"
+    r+=f"\nPlatforms: {self.platforms}"
     r+=f"\ndevelopers: {self.devs}"
     r+=f"\nGenres: {self.genres}"
     r+=f"\nESRB: {self.ESRB}"
     return r
 
-
-class api_juego():
-  @abc.abstractmethod
+class api_juego(metaclass= ABCMeta):
+  @abstractmethod
   def get_juego(self):
     pass
 
 class rawg_juego(api_juego):
-  def get_juego(game):
+  def __init__(self):
+    self.url='https://api.rawg.io/api/games/'
+  def get_juego(self,game):
     game=game.replace(" ", "-")
-    r=requests.get(f"https://api.rawg.io/api/games/{game}")
+    r=requests.get(f"{self.url}{game}")
     r=json.loads(r.text)
     r=str(r["slug"])
-    r=requests.get(f"https://api.rawg.io/api/games/{r}")
+    r=requests.get(f"{self.url}{r}")
     r=json.loads(r.text)
     game=juego(r['name'],r['description'],r['rating'],r['released'],["foto1","foto2"],r['platforms'],r['developers'],r['genres'], r['esrb_rating'])
     return game
 
-if __name__=="__main__":
-    jueguito = rawg_juego.get_juego("super-mario-bros")
-    print(jueguito)
+def build_juego(api, game):
+  juego = api.get_juego(game)
+  return juego
 
+if __name__ == '__main__':
+  rawg=rawg_juego()
+  print(build_juego(rawg,'the legend of zelda ocarina of time'))
