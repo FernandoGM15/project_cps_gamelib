@@ -3,7 +3,7 @@ import json
 from abc import *
 
 class juego(object):
-  def __init__(self, name:str, desc:str, rating:str, fecha:str, pictures:list , platforms: list , devs: list, genres: list,ESRB:str):
+  def __init__(self, name:str, desc:str, rating:str, fecha:str, pictures:list , platforms: list , devs: list, genres: list,ESRB:list):
     self.name=name
     self.desc=desc
     self.rating=rating
@@ -16,12 +16,12 @@ class juego(object):
 
   def __str__(self):
     r=f"\nName: {self.name}\n"
-    r+=f"\nDescription:{self.desc}"
-    r+=f"\nRating:{self.rating}"
-    r+=f"\nRelease date:{self.fecha}"
-    r+=f"\nPicture links{self.pictures}"
+    r+=f"\nDescription: {self.desc}"
+    r+=f"\nRating: {self.rating}"
+    r+=f"\nRelease date: {self.fecha}"
+    r+=f"\nPicture links: {self.pictures}"
     r+=f"\nPlatforms: {self.platforms}"
-    r+=f"\ndevelopers: {self.devs}"
+    r+=f"\nDevelopers: {self.devs}"
     r+=f"\nGenres: {self.genres}"
     r+=f"\nESRB: {self.ESRB}"
     return r
@@ -41,7 +41,7 @@ class rawg_juego(api_juego):
     r=str(r["slug"])
     r=requests.get(f"{self.url}{r}")
     r=json.loads(r.text)
-    game=juego(r['name'],r['description'],r['rating'],r['released'],["foto1","foto2"],r['platforms'],r['developers'],r['genres'], r['esrb_rating'])
+    game=juego(r['name'],r['description_raw'],r['rating'],r['released'],r["background_image"],[i.get("platform",{}).get("name") for i in r['platforms']],[i.get("name") for i in r['developers']],[i.get("name",{}) for i in r['genres']], r['esrb_rating'].get("name"))
     return game
 
 def build_juego(api, game):
