@@ -59,16 +59,25 @@ class rawg_juego(api_juego):
     game=game.replace(" ", "-")
     r=requests.get(f"{self.url}{game}")
     r=json.loads(r.text)
-    r=str(r["slug"])
-    r=requests.get(f"{self.url}{r}")
-    r=json.loads(r.text)
-    game=juego(r['name'],r['description_raw'],r['rating'],r['released'],r["background_image"],[i.get("platform",{}).get("name") for i in r['platforms']],[i.get("name") for i in r['developers']],[i.get("name",{}) for i in r['genres']], r['esrb_rating'].get("name"))
-    return game
+    try:
+      r=str(r["slug"])
+      r=requests.get(f"{self.url}{r}")
+      r=json.loads(r.text)
+      game=juego(r['name'],r['description_raw'],r['rating'],r['released'],r["background_image"],[i.get("platform",{}).get("name") for i in r['platforms']],[i.get("name") for i in r['developers']],[i.get("name",{}) for i in r['genres']], r['esrb_rating'].get("name"))
+      return game
+    except:
+      return -1 ##JUEGO NO ENCONTRADO
 
 def build_juego(api, game):
   juego = api.get_juego(game)
+  if juego == -1:
+    return -1 ##REGRESA EN CASO DE QUE NO SE ENCUENTRA EL JUEGO
   return juego
 
 if __name__ == '__main__':
   rawg=rawg_juego()
-  print(build_juego(rawg,'the legend of zelda ocarina of time'))
+  game=build_juego(rawg,'gta v')
+  try:
+    print(game.get_everything())
+  except:
+    print(f"Error [{game}]")
