@@ -12,7 +12,7 @@ class Biblioteca(object):
     def biblio_getjuegos(self):
         lista = []
         for i in self.juegos:
-            lista.append(i.get_name())
+            lista.append(i.get_everything())
         return lista
 
 
@@ -21,6 +21,6 @@ if __name__ == '__main__':
     juego = build_juego(rawg,'the legend of zelda ocarina of time')
     juego2 = build_juego(rawg,'gta 5')
     biblio = Biblioteca("Aventura")
-    biblio.AddJuego(juego)
-    biblio.AddJuego(juego2)
+    biblio.addJuego(juego)
+    biblio.addJuego(juego2)
     print(biblio.biblio_getjuegos())

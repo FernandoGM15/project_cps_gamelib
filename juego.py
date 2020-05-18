@@ -16,7 +16,24 @@ class juego(object):
   
   def get_name(self):
     return self.name
-
+  
+  def get_desc(self):
+    return self.desc
+  
+  def get_everything(self):
+    juego = {
+      'name': self.name,
+      'desc': self.desc,
+      'rating': self.rating,
+      'fecha': self.fecha,
+      'picture': self.pictures,
+      'platforms': self.platforms,
+      'devs': self.devs,
+      'genres': self.genres,
+      'esrb': self.ESRB
+    }
+    return juego
+  
   def __str__(self):
     r=f"\nName: {self.name}\n"
     r+=f"\nDescription: {self.desc}"
