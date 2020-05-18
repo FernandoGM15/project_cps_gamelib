@@ -45,7 +45,7 @@ The following programs must be installed in your computer in order to be able to
 
 - Step 2:
     
-    Open a terminal in the folder a run the script you want to check:
+    Open a terminal in the folder and then run the script you want to check:
     
     I.E:
     
