@@ -5,7 +5,10 @@ class test_juego(unittest.TestCase):
     class mock_api():
         def __init__(self):
             self.url="something that does NOT matter RN"
+            self.error = False
         def get_juego(self,game):
+            if self.error == True:
+                return -1
             game = juego(game,"adventure lonk", "5.0", "7/12/12", ["www.stockimages.com"], ["pc master race"],['EA'],['FPS','Strategy'],"A")
             return game
 
@@ -23,7 +26,9 @@ class test_juego(unittest.TestCase):
                     'devs':['EA'],
                     'genres':['FPS','Strategy'],
                     'esrb':"A",
-                } 
+
+                },
+                'err': False 
             },
             {
                 'in' : "B",
@@ -37,7 +42,8 @@ class test_juego(unittest.TestCase):
                     'devs':['EA'],
                     'genres':['FPS','Strategy'],
                     'esrb':"A",
-                }
+                },
+                'err': False
             },
             {
                 'in' : "C",
@@ -51,14 +57,22 @@ class test_juego(unittest.TestCase):
                     'devs':['EA'],
                     'genres':['FPS','Strategy'],
                     'esrb':"A",
-                }
+                },
+                'err': False
+            },
+            {
+                'in' : "D",
+                'ex' : -1,
+                'err': True
             }
         ]
         api = self.mock_api()
         for i in tc:
-            #print(i['ex'])
-            result = build_juego(api,i['in']).get_everything()
-            #print(result)
+            api.error = i['err']
+            if api.error == False:
+                result = build_juego(api,i['in']).get_everything()
+            else:
+                result = build_juego(api,i['in'])
             self.assertEqual(result,i['ex'])
 
     def test_build_juego_int(self):
