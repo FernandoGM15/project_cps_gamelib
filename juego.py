@@ -13,6 +13,9 @@ class juego(object):
     self.devs=devs
     self.genres=genres
     self.ESRB=ESRB or "NOT DEFINED, game too old(?)"
+  
+  def get_name(self):
+    return self.name
 
   def __str__(self):
     r=f"\nName: {self.name}\n"
@@ -21,7 +24,7 @@ class juego(object):
     r+=f"\nRelease date: {self.fecha}"
     r+=f"\nPicture links: {self.pictures}"
     r+=f"\nPlatforms: {self.platforms}"
-    r+=f"\nDevelopers: {self.devs}"
+    r+=f"\nevelopers: {self.devs}"
     r+=f"\nGenres: {self.genres}"
     r+=f"\nESRB: {self.ESRB}"
     return r
@@ -34,6 +37,7 @@ class api_juego(metaclass= ABCMeta):
 class rawg_juego(api_juego):
   def __init__(self):
     self.url='https://api.rawg.io/api/games/'
+
   def get_juego(self,game):
     game=game.replace(" ", "-")
     r=requests.get(f"{self.url}{game}")
