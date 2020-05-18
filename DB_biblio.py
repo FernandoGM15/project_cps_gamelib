@@ -2,12 +2,12 @@ from abc import abstractmethod, ABCMeta
 import requests
 import json
 import sqlite3
-from peewee import *
+from juego import *
 
 class DataBase(metaclass=ABCMeta):
-    # @abstractmethod
-    # def Add_juego(self):
-    #     pass
+    @abstractmethod
+    def Add_juego(self):
+        pass
     
     @abstractmethod
     def Create_Biblio(self):
@@ -26,7 +26,7 @@ class DB_Biblioteca(DataBase):
                 name VARCAHR(50),
                 description  VARCHAR(1500),
                 rating FLOAT,
-                realease VARCHAR (20),
+                release VARCHAR (20),
                 picture VARCHAR (50),
                 platforms VARCHAR (50),
                 developers VARCHAR (50),
@@ -34,7 +34,18 @@ class DB_Biblioteca(DataBase):
                 esrb VARCHAR(30)
             )
         ''')
+    
+    def Add_juego(self, juego: dict, nombre: str):
+        self.cursor.execute(f'''
+        INSERT INTO {nombre} (name, description, rating, release, picture, platforms, developers, genre, esrb) 
+        VALUES ("{juego.get('name')}", "{juego.get('desc')}", {juego.get("rating")},"{juego.get("fecha")}","{juego.get('picture')}","{juego.get('platforms')}","{juego.get('devs')}","{juego.get('genres')}","{juego.get('esrb')}");
+        ''')
+        self.conexion.commit()
 
 if __name__ == '__main__':
     db = DB_Biblioteca()
     db.Create_Biblio("Accion")
+    rawg=rawg_juego()
+    juego = build_juego(rawg,'the legend of zelda ocarina of time')
+    db.Add_juego(juego.get_everything(),"Accion")
+    
