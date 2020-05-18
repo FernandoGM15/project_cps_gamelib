@@ -102,9 +102,9 @@ class test_juego(unittest.TestCase):
             }
         ]
         for i in tc:
-            try:
+            try: #Por si llega a regresar el -1, que indica que el juego no se encontro
                 actual = (build_juego(api,i['in']).get_everything())
-            except:
+            except: #Ya que no se pudo crear el objeto juego
                 actual = build_juego(api,i['in'])
             self.assertEqual(actual,i['ex'])
 
