@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body{
+            background: url(../static/Library2.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+    <title>Biblioteca</title>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-titlte center">
+                <h5>Biblioteca: {{nombre}}</h5>
+            </div>
+            <div class="card-content">
+                <div class="collection">
+                    {%if error%}
+                        <h6 class="collection-item">{{bibliotecas}}</h6>
+                    {%else%}
+                        {% for i in bibliotecas%}
+                            <li class="collection-item"><div>{{i}}<a href="/biblioteca/{{nombre}}/{{i}}" class="secondary-content"><i class="material-icons">cancel</i></a></div></li>
+                        {% endfor %}
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

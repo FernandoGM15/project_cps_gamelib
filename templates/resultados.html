@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Resultado</title>
+    <style>
+        body{
+            background: url(../static/background.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="card offset-4">
+                <div class="card-image">
+                    <img src="{{data.picture}}">
+                    <span class="card-title"></span>
+                </div>
+                <div class="card-content">
+                    <table>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{data.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>{{data.desc}}</td>
+                        </tr>
+                        <tr>
+                            <td>Rating</td>
+                            <td>{{data.rating}}</td>
+                        </tr>
+                        <tr>
+                            <td>Release</td>
+                            <td>{{data.fecha}}</td>
+                        </tr>
+                        <tr>
+                            <td>Platforms</td>
+                            <td>{{data.platforms}}</td>
+                        </tr>
+                        <tr>
+                            <td>Developers</td>
+                            <td>{{data.devs}}</td>
+                        </tr>
+                        <tr>
+                            <td>Genres</td>
+                            <td>{{data.genres}}</td>
+                        </tr>
+                        <tr>
+                            <td>ESRB</td>
+                            <td>{{data.esrb}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-action">
+                    <form action="/data-add" method="post">
+                        <input type="hidden" name="table" value="{{data.genres[0]}}"></input>
+                        <input type="hidden" name="juego" value="{{data}}">
+                        <button type="submit" class="btn waves-effect">Agregar a {{data.genres[0]}}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
